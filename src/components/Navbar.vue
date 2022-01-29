@@ -56,7 +56,7 @@ function showMenu() {
               alt="Workflow"
             />
             <h1 class="text-white hidden md:block md:text-xl font-medium">
-              Interact
+              <router-link to="/"> Interact </router-link>
             </h1>
           </div>
           <div class="hidden sm:block sm:ml-6 mt-1">

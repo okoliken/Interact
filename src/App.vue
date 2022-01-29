@@ -6,4 +6,8 @@ import NavbarVue from "./components/Navbar.vue";
   <router-view />
 </template>
 
-<style></style>
+<style>
+body {
+  font-family: roboto;
+}
+</style>

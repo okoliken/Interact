@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import AssetsVue from "../components/Assets.vue";
+import ButtonVue from "../components/Button.vue";
+</script>
 
 <template>
   <div
@@ -10,7 +13,7 @@
           Sign in to your account
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form class="mt-8 space-y-6">
         <input type="hidden" name="remember" value="true" />
         <div>
           <label for="email-address" class="sr-only">Email address</label>
@@ -38,29 +41,21 @@
         </div>
 
         <div>
-          <button
-            type="submit"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-lg font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
+          <ButtonVue>
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <!-- Heroicon name: solid/lock-closed -->
-              <svg
-                class="h-5 w-5 text-slate-700 group-hover:text-slate-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              <AssetsVue />
             </span>
-            Sign in
-          </button>
+            Signin
+          </ButtonVue>
         </div>
+        <p class="text-slate-600 text-center border p-2 rounded-xl">
+          Create a free Account
+          <router-link
+            :to="{ name: 'Signup' }"
+            class="text-cyan-600 font-semibold"
+            >Here</router-link
+          >
+        </p>
       </form>
     </div>
   </div>

@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .get-started-btn {
-  @apply p-3 inline-block mt-12 lg:mt-16 bg-gray-900 transform transition-transform duration-150 ease-linear hover:scale-110 text-white rounded-md font-semibold;
+  @apply py-3 px-16 inline-block mt-10 lg:mt-12 bg-gray-900 transform transition-transform duration-150 ease-linear hover:scale-110 text-white rounded-md font-semibold;
 }

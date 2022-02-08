@@ -1,13 +1,11 @@
-<script setup>
-import NavbarVue from "./components/Navbar.vue";
-</script>
+<script setup></script>
 <template>
-  <NavbarVue />
   <router-view />
 </template>
 
 <style>
 body {
-  font-family: roboto;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 </style>

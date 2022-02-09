@@ -1,6 +1,16 @@
 <script setup>
 import AssetsVue from "../components/Assets.vue";
 import ButtonVue from "../components/Button.vue";
+import useVuelidate from "@vuelidate/core";
+import { minLength, required } from "@vuelidate/validators";
+import { reactive } from "@vue/reactivity";
+
+const account = reactive({
+  email: "",
+  username: "",
+  password: "",
+  confirmpassword: "",
+});
 </script>
 
 <template>
@@ -19,7 +29,6 @@ import ButtonVue from "../components/Button.vue";
           <label for="profile" class="sr-only">Profile</label>
           <input
             type="file"
-            required
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Profile Picture"
           />
@@ -28,7 +37,7 @@ import ButtonVue from "../components/Button.vue";
           <label for="username" class="sr-only">username</label>
           <input
             type="email"
-            required
+            v-model="account.username"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Username"
           />
@@ -38,7 +47,7 @@ import ButtonVue from "../components/Button.vue";
           <input
             type="email"
             autocomplete="email"
-            required
+            v-model="account.email"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
           />
@@ -48,9 +57,19 @@ import ButtonVue from "../components/Button.vue";
           <input
             type="password"
             autocomplete="current-password"
-            required
+            v-model="account.password"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
+          />
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          <input
+            type="password"
+            autocomplete="confimpassword"
+            v-model="account.confirmpassword"
+            class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            placeholder="Confim password"
           />
         </div>
 

@@ -12,7 +12,7 @@ const shownestedCommentComponent = () => {
 };
 </script>
 <template>
-  <div class="ml-12">
+  <div class="ml-5 px-8 border-l-2">
     <div
       class="p-3 md:p-4 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comment-reply"
     >

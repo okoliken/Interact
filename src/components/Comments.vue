@@ -17,7 +17,7 @@ const showReplies = () => {
 };
 </script>
 <template>
-  <div :class="[isCommentReply ? 'border-l-2' : '']">
+  <div>
     <div
       class="p-3 md:p-4 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comments"
     >
@@ -82,7 +82,7 @@ const showReplies = () => {
       </template>
       <!-- END -->
     </AddCommentVue>
-    <RepliesVue v-if="isCommentReply" />
+    <RepliesVue />
   </div>
 </template>
 //

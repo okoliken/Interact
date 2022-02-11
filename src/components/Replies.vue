@@ -6,6 +6,7 @@ import AddCommentVue from "./AddComment.vue";
 import ReuseableBtnVue from "./ReuseableBtn.vue";
 import { ref } from "@vue/reactivity";
 import IconVue from "./Icon.vue";
+import ModalVue from "./Modal.vue";
 // END
 
 // REACTIVE VARIABLES
@@ -21,7 +22,6 @@ const editComment = () => {
   EditMyComment.value = !EditMyComment.value;
 };
 const deleteComment = () => {
-  console.log("hello world");
   DeleteMyComment.value = !DeleteMyComment.value;
 };
 const shownestedCommentComponent = () => {
@@ -132,4 +132,5 @@ const shownestedCommentComponent = () => {
       <!-- END -->
     </AddCommentVue>
   </div>
+  <ModalVue v-if="DeleteMyComment" />
 </template>

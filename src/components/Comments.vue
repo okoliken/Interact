@@ -19,14 +19,16 @@ const showReplies = () => {
 <template>
   <div>
     <div
-      class="p-3 md:p-4 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comments"
+      class="p-3 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comments"
     >
+      <!-- DESKTOP LIKE -->
       <LikeVue
         class="hidden md:flex md:flex-col items-center md:space-x-0 py-2 px-5 space-y-5 h-24"
       />
+      <!-- END -->
       <!-- USER INFO -->
-      <div>
-        <div class="flex items-center justify-between space-x-4">
+      <div class="w-full">
+        <div class="flex items-center justify-between space-x-4 w-full">
           <div class="flex items-center space-x-4">
             <img
               src="../assets/images/avatars/image-juliusomo.png"
@@ -38,28 +40,32 @@ const showReplies = () => {
               <span class="font-light text-gray-500">1 month ago</span>
             </p>
           </div>
+          <!-- DESKTOP REPLY BTN -->
           <span class="hidden md:block">
             <Reply @click="showReplyComponent" />
           </span>
+          <!-- END -->
         </div>
         <!-- END -->
         <!-- COMMENTS -->
         <div>
           <p class="text-gray-500 text-md my-5">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam
-            corrupti explicabo reiciendis nostrum minus amet, nemo saepe placeat
-            nisi porro atque suscipit illum distinctio ipsam repellendus
-            facilis. Cumque,
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+            debitis cum consectetur vero, delectus veniam ea magnam fugit
+            voluptatem distinctio sed quod tempora dolor corporis beatae ab
+            officia voluptate autem ipsum facere laudantium doloribus a! Est
+            incidunt culpa at provident?
           </p>
         </div>
         <!-- END -->
       </div>
       <!-- bottom section in mobile view -->
       <div class="flex items-center justify-between md:hidden">
-        <!-- LIKE BTN -->
+        <!-- LIKE MOBLIE BTN -->
         <LikeVue class="flex items-center space-x-3 py-2 px-5 md:hidden" />
         <!-- END -->
-        <!-- REPLY -->
+
+        <!-- REPLY MOBILE -->
         <span class="block md:hidden">
           <Reply @click="showReplyComponent" />
         </span>
@@ -83,6 +89,6 @@ const showReplies = () => {
       <!-- END -->
     </AddCommentVue>
     <RepliesVue />
+    <RepliesVue />
   </div>
 </template>
-//

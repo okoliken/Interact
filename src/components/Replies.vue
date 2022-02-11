@@ -21,6 +21,7 @@ const editComment = () => {
   EditMyComment.value = !EditMyComment.value;
 };
 const deleteComment = () => {
+  console.log("hello world");
   DeleteMyComment.value = !DeleteMyComment.value;
 };
 const shownestedCommentComponent = () => {

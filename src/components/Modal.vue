@@ -1,5 +1,8 @@
 <script setup>
 import ConfirmBtnVue from "./ConfirmBtn.vue";
+const props = defineProps({
+  cancelDelete: Function,
+});
 </script>
 <template>
   <teleport to=".entryModalcontainer">

@@ -16,9 +16,9 @@ import ConfirmBtnVue from "./ConfirmBtn.vue";
             and can't be undone
           </p>
 
-          <div class="flex items-center py-5">
+          <div class="flex items-center py-5 space-x-4">
             <ConfirmBtnVue class="bg-gray-600">no, cancel </ConfirmBtnVue>
-            <ConfirmBtnVue class="bg-red-500 ml-2">yes, delete </ConfirmBtnVue>
+            <ConfirmBtnVue class="bg-red-500">yes, delete </ConfirmBtnVue>
           </div>
         </div>
       </div>

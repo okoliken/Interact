@@ -12,9 +12,10 @@ import ModalVue from "./Modal.vue";
 // REACTIVE VARIABLES
 const nestedCommentComponent = ref(false);
 const name = ref("Jeffery");
-const isAuthenticated = ref(true);
+const isAuthenticated = ref(false);
 const EditMyComment = ref(false);
 const DeleteMyComment = ref(false);
+const closeModal = ref(false);
 // END
 
 // FUNCTIONS
@@ -26,6 +27,9 @@ const deleteComment = () => {
 };
 const shownestedCommentComponent = () => {
   nestedCommentComponent.value = !nestedCommentComponent.value;
+};
+const cancelDelete = () => {
+  closeModal.value = true;
 };
 // END
 </script>
@@ -132,5 +136,5 @@ const shownestedCommentComponent = () => {
       <!-- END -->
     </AddCommentVue>
   </div>
-  <ModalVue v-if="DeleteMyComment" />
+  <ModalVue v-if="DeleteMyComment" :cancelDelete="cancelDelete" />
 </template>

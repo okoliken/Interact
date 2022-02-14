@@ -1,7 +1,7 @@
 <script setup>
 import ConfirmBtnVue from "./ConfirmBtn.vue";
-const props = defineProps({
-  cancelDelete: Function,
+const close = defineProps({
+  deleteComment: Function,
 });
 </script>
 <template>
@@ -20,7 +20,9 @@ const props = defineProps({
           </p>
 
           <div class="flex items-center py-5 space-x-4">
-            <ConfirmBtnVue class="bg-gray-600">no, cancel </ConfirmBtnVue>
+            <ConfirmBtnVue class="bg-gray-600" @click="deleteComment"
+              >no, cancel
+            </ConfirmBtnVue>
             <ConfirmBtnVue class="bg-red-500">yes, delete </ConfirmBtnVue>
           </div>
         </div>

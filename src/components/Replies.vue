@@ -133,5 +133,5 @@ const shownestedCommentComponent = () => {
       <!-- END -->
     </AddCommentVue>
   </div>
-  <ModalVue v-if="DeleteMyComment" />
+  <ModalVue v-if="DeleteMyComment" :deleteComment="deleteComment" />
 </template>

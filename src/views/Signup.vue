@@ -2,15 +2,53 @@
 import AssetsVue from "../components/Assets.vue";
 import ButtonVue from "../components/Button.vue";
 import useVuelidate from "@vuelidate/core";
-import { minLength, required } from "@vuelidate/validators";
+import { minLength, required, email, sameAs } from "@vuelidate/validators";
 import { reactive } from "@vue/reactivity";
+import { computed } from "@vue/runtime-core";
 
+// REACTIVE FORM DATA
 const account = reactive({
   email: "",
   username: "",
   password: "",
   confirmpassword: "",
 });
+
+// VLIDATING REACTIVE FORM DATA
+const rules = computed(() => {
+  return {
+    email: {
+      required,
+      email,
+    },
+    username: { required },
+    password: { required, minLength: minLength(6) },
+    confirmpassword: { required, sameAs: sameAs(account.password) },
+  };
+});
+const v$ = useVuelidate(rules, account);
+// END
+
+// ASYNC FUNCTION THAT MAKES REQUEST TO BACKEND
+const handleSubmit = () => {
+  // INSTANTIATE VUELIDATE
+  v$.value.$validate();
+  // END
+
+  // VALIDATE DATA BEFORE IT IS SENT TO BACKEND
+  if (v$.value.$error) {
+    return false;
+  } else {
+    console.log(account);
+  }
+  // END
+};
+
+const checkIfUserTouched = () => {
+  if (v$.value.$touch) {
+    return true;
+  } else return false;
+};
 </script>
 
 <template>
@@ -23,7 +61,7 @@ const account = reactive({
           Create an Account
         </h2>
       </div>
-      <form class="mt-8 space-y-6">
+      <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
         <input type="hidden" name="remember" value="true" />
         <div>
           <label for="profile" class="sr-only">Profile</label>
@@ -36,31 +74,44 @@ const account = reactive({
         <div>
           <label for="username" class="sr-only">username</label>
           <input
-            type="email"
+            type="text"
+            @blur="checkIfUserTouched"
+            :class="[v$.username.$error ? 'ring-2 ring-red-400 border-2' : '']"
             v-model="account.username"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Username"
           />
+          <span v-if="v$.username.$error" class="text-red-400 font-semibold">
+            {{ v$.username.$errors[0].$message }}
+          </span>
         </div>
         <div>
           <label for="email-address" class="sr-only">Email address</label>
           <input
             type="email"
             autocomplete="email"
+            :class="[v$.email.$error ? 'ring-2 ring-red-400 border-2' : '']"
             v-model="account.email"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
           />
+          <span v-if="v$.email.$error" class="text-red-400 font-semibold">
+            {{ v$.email.$errors[0].$message }}
+          </span>
         </div>
         <div>
           <label for="password" class="sr-only">Password</label>
           <input
             type="password"
+            :class="[v$.password.$error ? 'ring-2 ring-red-400 border-2' : '']"
             autocomplete="current-password"
             v-model="account.password"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
           />
+          <span v-if="v$.password.$error" class="text-red-400 font-semibold">
+            {{ v$.password.$errors[0].$message }}
+          </span>
         </div>
         <div>
           <label for="password" class="sr-only">Password</label>
@@ -69,7 +120,7 @@ const account = reactive({
             autocomplete="confimpassword"
             v-model="account.confirmpassword"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confim password"
+            placeholder="Confrim password"
           />
         </div>
 
@@ -94,5 +145,3 @@ const account = reactive({
     </div>
   </div>
 </template>
-
-<style></style>

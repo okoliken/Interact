@@ -117,15 +117,31 @@ const checkIfUserTouched = () => {
           <label for="password" class="sr-only">Password</label>
           <input
             type="password"
+            :class="[
+              v$.confirmpassword.$error ? 'ring-2 ring-red-400 border-2' : '',
+            ]"
             autocomplete="confimpassword"
             v-model="account.confirmpassword"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Confrim password"
           />
+          <span
+            v-if="v$.confirmpassword.$error"
+            class="text-red-400 font-semibold"
+          >
+            {{ v$.confirmpassword.$errors[0].$message }}
+          </span>
         </div>
 
         <div>
-          <ButtonVue>
+          <ButtonVue
+            :disabled="v$.$error"
+            :class="[
+              v$.$error
+                ? 'bg-opacity-20 hover:bg-slate-300 cursor-not-allowed'
+                : '',
+            ]"
+          >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <!-- Heroicon name: solid/lock-closed -->
               <AssetsVue />

@@ -3,10 +3,11 @@ import AssetsVue from "../components/Assets.vue";
 import ButtonVue from "../components/Button.vue";
 import useVuelidate from "@vuelidate/core";
 import { minLength, required, email, sameAs } from "@vuelidate/validators";
-import { reactive } from "@vue/reactivity";
+import { reactive, ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 
 // REACTIVE FORM DATA
+const fileInfo = ref(null);
 const account = reactive({
   email: "",
   username: "",
@@ -28,7 +29,9 @@ const rules = computed(() => {
 });
 const v$ = useVuelidate(rules, account);
 // END
-
+const userProfile = (e) => {
+  console.log((fileInfo.value = e));
+};
 // ASYNC FUNCTION THAT MAKES REQUEST TO BACKEND
 const handleSubmit = () => {
   // INSTANTIATE VUELIDATE
@@ -66,6 +69,7 @@ const checkIfUserTouched = () => {
         <div>
           <label for="profile" class="sr-only">Profile</label>
           <input
+            @change="userProfile($event)"
             type="file"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Profile Picture"

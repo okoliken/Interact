@@ -12,7 +12,7 @@ import ModalVue from "./Modal.vue";
 // REACTIVE VARIABLES
 const nestedCommentComponent = ref(false);
 const name = ref("Jeffery");
-const isAuthenticated = ref(true);
+const isAuthenticated = ref(false);
 const EditMyComment = ref(false);
 const DeleteMyComment = ref(false);
 // END

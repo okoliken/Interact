@@ -1,5 +1,9 @@
 <script setup>
 import ReuseableBtnVue from "./ReuseableBtn.vue";
+defineProps({
+  modelValue: String,
+});
+defineEmits(["update:modelValue"]);
 </script>
 
 <template>
@@ -12,6 +16,8 @@ import ReuseableBtnVue from "./ReuseableBtn.vue";
           class="w-10 h-10 rounded-full object-contain hidden md:block"
         />
         <textarea
+          @input="$emit('update:modelValue', $event.target.value)"
+          :value="modelValue"
           cols="3"
           rows="3"
           class="border w-full p-3 outline-none focus-within:border-slate-700 rounded-lg text-slate-700 resize-none"

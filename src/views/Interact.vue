@@ -1,27 +1,44 @@
 <script setup>
+import { ref } from "@vue/reactivity";
 import AddCommentVue from "../components/AddComment.vue";
 import CommentsVue from "../components/Comments.vue";
 import ReuseableBtnVue from "../components/ReuseableBtn.vue";
+import commentsFrame from "@/components/commentsFrame.vue";
+
+const addComment = ref("");
+const error = ref(false);
+const sendComment = () => {
+  if (addComment.value === "") {
+    alert("value should not be empty");
+  } else {
+    error.value = true;
+    console.log(addComment.value);
+  }
+};
 </script>
 
 <template>
-  <div class="">
+  <div>
     <div
       class="mt-5 flex justify-center flex-col items-center mx-3 relative min-h-screen"
     >
       <div
         class="md:transform-none h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 mb-60 md:mb-44"
       >
-        <CommentsVue />
+        <commentsFrame v-if="error" />
+        <CommentsVue v-else />
       </div>
       <AddCommentVue
+        v-model="addComment"
         class="h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 absolute bottom-10"
       >
         <template v-slot:desktopbtn>
-          <ReuseableBtnVue class="hidden md:block h-12"> Send </ReuseableBtnVue>
+          <ReuseableBtnVue @click="sendComment()" class="hidden md:block h-12">
+            Send
+          </ReuseableBtnVue>
         </template>
         <template v-slot:mobilebtn>
-          <ReuseableBtnVue> Send </ReuseableBtnVue>
+          <ReuseableBtnVue @click="sendComment()"> Send </ReuseableBtnVue>
         </template>
       </AddCommentVue>
     </div>

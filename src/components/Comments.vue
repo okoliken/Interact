@@ -88,7 +88,6 @@ const showReplies = () => {
       </template>
       <!-- END -->
     </AddCommentVue>
-    <RepliesVue />
-    <RepliesVue />
+    <!-- <RepliesVue /> -->
   </div>
 </template>

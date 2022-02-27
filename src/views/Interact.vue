@@ -9,8 +9,11 @@ import { onMounted } from "@vue/runtime-core";
 
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
+const comments = ref([])
+const replies = ref([])
+
 const addComment = ref("");
-const error = ref(false);
+const isloading = ref(false);
 const sendComment = () => {
   if (addComment.value === "") {
     alert("value should not be empty");
@@ -22,14 +25,23 @@ const sendComment = () => {
 
 const db = getFirestore();
 const colref = collection(db, "comments");
+const colrefreplies = collection(db, "replies");
 
 onMounted(() => {
+  isloading.value = true
   getDocs(colref).then((snapshot) => {
-    let comments  =  []
     snapshot.docs.forEach((items => {
-        comments.push({...items.data(), id: items.id})
+        comments.value.push({...items.data(), id: items.id})
     }))
-    console.log(comments)
+    isloading.value = false
+   return comments.value
+  });
+
+  getDocs(colrefreplies).then((snapshot) => {
+    snapshot.docs.forEach((items => {
+        replies.value.push({...items.data(), id: items.id})
+    }))
+   return replies.value
   });
 });
 </script>
@@ -42,8 +54,8 @@ onMounted(() => {
       <div
         class="md:transform-none h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 mb-60 md:mb-44"
       >
-        <commentsFrame v-if="error" />
-        <CommentsVue v-else />
+        <commentsFrame v-if="isloading === true" />
+        <CommentsVue v-else  :comments="comments" :replies="replies"/>
       </div>
       <AddCommentVue
         v-model="addComment"

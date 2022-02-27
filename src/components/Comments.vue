@@ -6,6 +6,11 @@ import AddCommentVue from "./AddComment.vue";
 import ReuseableBtnVue from "./ReuseableBtn.vue";
 import RepliesVue from "./Replies.vue";
 
+defineProps({
+  comments:Array,
+  replies:Array
+})
+
 const isReplyComponent = ref(false);
 const isCommentReply = ref(false);
 
@@ -19,6 +24,8 @@ const showReplies = () => {
 <template>
   <div>
     <div
+        v-for="comment in comments"
+        :key="comment.id"
       class="p-3 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comments"
     >
       <!-- DESKTOP LIKE -->
@@ -50,11 +57,7 @@ const showReplies = () => {
         <!-- COMMENTS -->
         <div>
           <p class="text-gray-500 text-md my-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            debitis cum consectetur vero, delectus veniam ea magnam fugit
-            voluptatem distinctio sed quod tempora dolor corporis beatae ab
-            officia voluptate autem ipsum facere laudantium doloribus a! Est
-            incidunt culpa at provident?
+           {{comment.content}}
           </p>
         </div>
         <!-- END -->
@@ -88,9 +91,6 @@ const showReplies = () => {
       </template>
       <!-- END -->
     </AddCommentVue>
-    <RepliesVue />
-    <RepliesVue />
-    <RepliesVue />
-    <RepliesVue />
+    <RepliesVue v-for="reply in replies" :key="reply.id" :reply="reply"/>
   </div>
 </template>

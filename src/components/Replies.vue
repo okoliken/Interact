@@ -8,7 +8,9 @@ import { ref } from "@vue/reactivity";
 import IconVue from "./Icon.vue";
 import ModalVue from "./Modal.vue";
 // END
-
+defineProps({
+  reply:Object
+})
 // REACTIVE VARIABLES
 const nestedCommentComponent = ref(false);
 const name = ref("Jeffery");
@@ -90,7 +92,7 @@ const shownestedCommentComponent = () => {
         <div v-else>
           <p class="text-gray-500 text-md my-5">
             <span class="text-interactBlue font-bold">@Jeffery</span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, id.
+            {{reply.content}}
           </p>
         </div>
 

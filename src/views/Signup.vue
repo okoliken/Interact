@@ -6,13 +6,13 @@ import { minLength, required, email, sameAs } from "@vuelidate/validators";
 import { reactive, ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 
+
 // REACTIVE FORM DATA
 const fileInfo = ref(null);
 const account = reactive({
   email: "",
   username: "",
   password: "",
-  confirmpassword: "",
 });
 
 // VLIDATING REACTIVE FORM DATA
@@ -24,7 +24,6 @@ const rules = computed(() => {
     },
     username: { required },
     password: { required, minLength: minLength(6) },
-    confirmpassword: { required, sameAs: sameAs(account.password) },
   };
 });
 const v$ = useVuelidate(rules, account);
@@ -42,7 +41,7 @@ const handleSubmit = () => {
   if (v$.value.$error) {
     return false;
   } else {
-    console.log(account);
+    return true;
   }
   // END
 };
@@ -52,6 +51,8 @@ const checkIfUserTouched = () => {
     return true;
   } else return false;
 };
+
+
 </script>
 
 <template>
@@ -115,25 +116,6 @@ const checkIfUserTouched = () => {
           />
           <span v-if="v$.password.$error" class="text-red-400 font-semibold">
             {{ v$.password.$errors[0].$message }}
-          </span>
-        </div>
-        <div>
-          <label for="password" class="sr-only">Password</label>
-          <input
-            type="password"
-            :class="[
-              v$.confirmpassword.$error ? 'ring-2 ring-red-400 border-2' : '',
-            ]"
-            autocomplete="confimpassword"
-            v-model="account.confirmpassword"
-            class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confrim password"
-          />
-          <span
-            v-if="v$.confirmpassword.$error"
-            class="text-red-400 font-semibold"
-          >
-            {{ v$.confirmpassword.$errors[0].$message }}
           </span>
         </div>
 

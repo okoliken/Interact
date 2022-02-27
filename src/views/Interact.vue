@@ -5,6 +5,10 @@ import CommentsVue from "../components/Comments.vue";
 import ReuseableBtnVue from "../components/ReuseableBtn.vue";
 import commentsFrame from "@/components/commentsFrame.vue";
 
+import { onMounted } from "@vue/runtime-core";
+
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
 const addComment = ref("");
 const error = ref(false);
 const sendComment = () => {
@@ -15,6 +19,19 @@ const sendComment = () => {
     console.log(addComment.value);
   }
 };
+
+const db = getFirestore();
+const colref = collection(db, "comments");
+
+onMounted(() => {
+  getDocs(colref).then((snapshot) => {
+    let comments  =  []
+    snapshot.docs.forEach((items => {
+        comments.push({...items.data(), id: items.id})
+    }))
+    console.log(comments)
+  });
+});
 </script>
 
 <template>

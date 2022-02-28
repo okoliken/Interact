@@ -20,6 +20,8 @@ const showReplyComponent = () => {
 const showReplies = () => {
   isCommentReply.value = !isCommentReply.value;
 };
+
+
 </script>
 <template>
   <div>
@@ -30,6 +32,7 @@ const showReplies = () => {
     >
       <!-- DESKTOP LIKE -->
       <LikeVue
+        :like="comment.like"
         class="hidden md:flex md:flex-col items-center md:space-x-0 py-2 px-5 space-y-5 h-24"
       />
       <!-- END -->
@@ -65,7 +68,7 @@ const showReplies = () => {
       <!-- bottom section in mobile view -->
       <div class="flex items-center justify-between md:hidden">
         <!-- LIKE MOBLIE BTN -->
-        <LikeVue class="flex items-center space-x-3 py-2 px-5 md:hidden" />
+        <LikeVue  :like="comment.like" class="flex items-center space-x-3 py-2 px-5 md:hidden" />
         <!-- END -->
 
         <!-- REPLY MOBILE -->

@@ -7,14 +7,19 @@ import commentsFrame from "@/components/commentsFrame.vue";
 
 import { onMounted } from "@vue/runtime-core";
 
-import { getFirestore, collection, getDocs , addDoc} from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  addDoc,
+} from "firebase/firestore";
 
-const comments = ref([])
-const replies = ref([])
+const comments = ref([]);
+const replies = ref([]);
 
 const addComment = ref("");
 const isLoading = ref(false);
-const isSending = ref(false)
+const isSending = ref(false);
 
 const db = getFirestore();
 const colref = collection(db, "comments");
@@ -24,34 +29,29 @@ const sendComment = () => {
   if (addComment.value === "") {
     alert("value should not be empty");
   } else {
-      isSending.value = true
+    isSending.value = true;
     addDoc(colref, {
-      content: addComment.value
-    }).then(()=> {
-      addComment.value = ""
-      isSending.value = false
-    })
+      content: addComment.value,
+      like:0
+    }).then(() => {
+      addComment.value = "";
+      isSending.value = false;
+    });
   }
 };
 
-
-
 onMounted(() => {
-  isLoading.value = true
-  getDocs(colref).then((snapshot) => {
-    snapshot.docs.forEach((items => {
-        comments.value.push({...items.data(), id: items.id})
-    }))
-    isLoading.value = false
-   return comments.value
+  isLoading.value = true;
+
+  onSnapshot(colref, (snapshot) => {
+    snapshot.docs.forEach((items) => {
+      comments.value.push({ ...items.data(), id: items.id });
+    });
+    isLoading.value = false;
+    return comments.value;
   });
 
-  getDocs(colrefreplies).then((snapshot) => {
-    snapshot.docs.forEach((items => {
-        replies.value.push({...items.data(), id: items.id})
-    }))
-   return replies.value
-  });
+
 });
 </script>
 
@@ -64,24 +64,45 @@ onMounted(() => {
         class="md:transform-none h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 mb-60 md:mb-44"
       >
         <commentsFrame v-if="isLoading === true" />
-        <CommentsVue v-else  :comments="comments" :replies="replies"/>
+        <CommentsVue v-else :comments="comments" :replies="replies" />
       </div>
       <AddCommentVue
         v-model="addComment"
         class="h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 absolute bottom-10"
       >
         <template v-slot:desktopbtn>
-         <ReuseableBtnVue :class="{'bg-opacity-30':isSending}"  v-if="isSending" :disabled="isSending" class="hidden md:block h-12">
+          <!-- DESKTOP BTN WITH CONDITIONAL RENDERING -->
+          <ReuseableBtnVue
+            :class="{ 'bg-opacity-30': isSending }"
+            v-if="isSending"
+            :disabled="isSending"
+            class="hidden md:block h-12"
+          >
             Sending...
           </ReuseableBtnVue>
-          <ReuseableBtnVue @click="sendComment()" v-else class="hidden md:block h-12">
+          <ReuseableBtnVue
+            @click="sendComment()"
+            v-else
+            class="hidden md:block h-12"
+          >
+            Send
+          </ReuseableBtnVue>
+          <!-- END -->
+        </template>
+        <!-- MOBILE BTN WITH CONDITIONAL RENDERING -->
+        <template v-slot:mobilebtn>
+          <ReuseableBtnVue
+            :class="{ 'bg-opacity-30': isSending }"
+            v-if="isSending"
+            :disabled="isSending"
+          >
+            Sending...
+          </ReuseableBtnVue>
+          <ReuseableBtnVue @click="sendComment()" v-else>
             Send
           </ReuseableBtnVue>
         </template>
-        <template v-slot:mobilebtn>
-          <ReuseableBtnVue :class="{'bg-opacity-30':isSending}"  v-if="isSending" :disabled="isSending"> Sending... </ReuseableBtnVue>
-          <ReuseableBtnVue @click="sendComment()" v-else> Send </ReuseableBtnVue>
-        </template>
+        <!-- END -->
       </AddCommentVue>
     </div>
   </div>

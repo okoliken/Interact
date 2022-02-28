@@ -7,33 +7,42 @@ import commentsFrame from "@/components/commentsFrame.vue";
 
 import { onMounted } from "@vue/runtime-core";
 
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs , addDoc} from "firebase/firestore";
 
 const comments = ref([])
 const replies = ref([])
 
 const addComment = ref("");
-const isloading = ref(false);
-const sendComment = () => {
-  if (addComment.value === "") {
-    alert("value should not be empty");
-  } else {
-    error.value = true;
-    console.log(addComment.value);
-  }
-};
+const isLoading = ref(false);
+const isSending = ref(false)
 
 const db = getFirestore();
 const colref = collection(db, "comments");
 const colrefreplies = collection(db, "replies");
 
+const sendComment = () => {
+  if (addComment.value === "") {
+    alert("value should not be empty");
+  } else {
+      isSending.value = true
+    addDoc(colref, {
+      content: addComment.value
+    }).then(()=> {
+      addComment.value = ""
+      isSending.value = false
+    })
+  }
+};
+
+
+
 onMounted(() => {
-  isloading.value = true
+  isLoading.value = true
   getDocs(colref).then((snapshot) => {
     snapshot.docs.forEach((items => {
         comments.value.push({...items.data(), id: items.id})
     }))
-    isloading.value = false
+    isLoading.value = false
    return comments.value
   });
 
@@ -54,7 +63,7 @@ onMounted(() => {
       <div
         class="md:transform-none h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 mb-60 md:mb-44"
       >
-        <commentsFrame v-if="isloading === true" />
+        <commentsFrame v-if="isLoading === true" />
         <CommentsVue v-else  :comments="comments" :replies="replies"/>
       </div>
       <AddCommentVue
@@ -62,12 +71,16 @@ onMounted(() => {
         class="h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 absolute bottom-10"
       >
         <template v-slot:desktopbtn>
-          <ReuseableBtnVue @click="sendComment()" class="hidden md:block h-12">
+         <ReuseableBtnVue :class="{'bg-opacity-30':isSending}"  v-if="isSending" :disabled="isSending" class="hidden md:block h-12">
+            Sending...
+          </ReuseableBtnVue>
+          <ReuseableBtnVue @click="sendComment()" v-else class="hidden md:block h-12">
             Send
           </ReuseableBtnVue>
         </template>
         <template v-slot:mobilebtn>
-          <ReuseableBtnVue @click="sendComment()"> Send </ReuseableBtnVue>
+          <ReuseableBtnVue :class="{'bg-opacity-30':isSending}"  v-if="isSending" :disabled="isSending"> Sending... </ReuseableBtnVue>
+          <ReuseableBtnVue @click="sendComment()" v-else> Send </ReuseableBtnVue>
         </template>
       </AddCommentVue>
     </div>

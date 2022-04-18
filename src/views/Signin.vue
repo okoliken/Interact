@@ -41,12 +41,14 @@ import ButtonVue from "../components/Button.vue";
         </div>
 
         <div>
-          <ButtonVue>
-            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <AssetsVue />
-            </span>
-            Signin
-          </ButtonVue>
+          <router-link :to="{name: 'Interact'}">
+            <ButtonVue>
+              <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                <AssetsVue />
+              </span>
+              Signin
+            </ButtonVue>
+          </router-link>
         </div>
         <p class="text-slate-600 text-center border p-2 rounded-xl">
           Create a free Account

@@ -5,14 +5,7 @@ import CommentsVue from "../components/Comments.vue";
 import ReuseableBtnVue from "../components/ReuseableBtn.vue";
 import commentsFrame from "@/components/commentsFrame.vue";
 
-import { onMounted } from "@vue/runtime-core";
 
-import {
-  getFirestore,
-  collection,
-  onSnapshot,
-  addDoc,
-} from "firebase/firestore";
 
 const comments = ref([]);
 const replies = ref([]);
@@ -21,38 +14,17 @@ const addComment = ref("");
 const isLoading = ref(false);
 const isSending = ref(false);
 
-const db = getFirestore();
-const colref = collection(db, "comments");
-const colrefreplies = collection(db, "replies");
+
 
 const sendComment = () => {
   if (addComment.value === "") {
     alert("value should not be empty");
   } else {
-    isSending.value = true;
-    addDoc(colref, {
-      content: addComment.value,
-      like:0
-    }).then(() => {
-      addComment.value = "";
-      isSending.value = false;
-    });
+   console.log('sent')
   }
 };
 
-onMounted(() => {
-  isLoading.value = true;
 
-  onSnapshot(colref, (snapshot) => {
-    snapshot.docs.forEach((items) => {
-      comments.value.push({ ...items.data(), id: items.id });
-    });
-    isLoading.value = false;
-    return comments.value;
-  });
-
-
-});
 </script>
 
 <template>
@@ -63,8 +35,8 @@ onMounted(() => {
       <div
         class="md:transform-none h-auto mx-14 w-full sm:w-4/5 lg:w-7/12 mb-60 md:mb-44"
       >
-        <commentsFrame v-if="isLoading === true" />
-        <CommentsVue v-else :comments="comments" :replies="replies" />
+        <!-- <commentsFrame v-if="isLoading === true" /> -->
+        <CommentsVue   />
       </div>
       <AddCommentVue
         v-model="addComment"

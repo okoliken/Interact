@@ -7,9 +7,9 @@ import ReuseableBtnVue from "./ReuseableBtn.vue";
 import RepliesVue from "./Replies.vue";
 
 defineProps({
-  comments:Array,
-  replies:Array
-})
+  comments: Array,
+  replies: Array,
+});
 
 const isReplyComponent = ref(false);
 const isCommentReply = ref(false);
@@ -20,19 +20,14 @@ const showReplyComponent = () => {
 const showReplies = () => {
   isCommentReply.value = !isCommentReply.value;
 };
-
-
 </script>
 <template>
   <div>
     <div
-        v-for="comment in comments"
-        :key="comment.id"
       class="p-3 bg-white rounded-md mb-2 md:flex md:flex-row space-x-3 comments"
     >
       <!-- DESKTOP LIKE -->
       <LikeVue
-        :like="comment.like"
         class="hidden md:flex md:flex-col items-center md:space-x-0 py-2 px-5 space-y-5 h-24"
       />
       <!-- END -->
@@ -60,7 +55,10 @@ const showReplies = () => {
         <!-- COMMENTS -->
         <div>
           <p class="text-gray-500 text-md my-5">
-           {{comment.content}}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis at
+            tenetur dignissimos praesentium provident suscipit animi dicta
+            accusantium odit eligendi. Recusandae sapiente magnam, voluptate
+            temporibus ut perspiciatis ratione nemo qui!
           </p>
         </div>
         <!-- END -->
@@ -68,7 +66,9 @@ const showReplies = () => {
       <!-- bottom section in mobile view -->
       <div class="flex items-center justify-between md:hidden">
         <!-- LIKE MOBLIE BTN -->
-        <LikeVue  :like="comment.like" class="flex items-center space-x-3 py-2 px-5 md:hidden" />
+        <LikeVue
+          class="flex items-center space-x-3 py-2 px-5 md:hidden"
+        />
         <!-- END -->
 
         <!-- REPLY MOBILE -->
@@ -94,6 +94,7 @@ const showReplies = () => {
       </template>
       <!-- END -->
     </AddCommentVue>
-    <RepliesVue v-for="reply in replies" :key="reply.id" :reply="reply"/>
+    <RepliesVue />
+    <RepliesVue />
   </div>
 </template>

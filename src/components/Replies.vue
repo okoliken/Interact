@@ -14,7 +14,7 @@ defineProps({
 // REACTIVE VARIABLES
 const nestedCommentComponent = ref(false);
 const name = ref("Jeffery");
-const isAuthenticated = ref(false);
+const isAuthenticated = ref(true);
 const EditMyComment = ref(false);
 const DeleteMyComment = ref(false);
 // END
@@ -92,7 +92,7 @@ const shownestedCommentComponent = () => {
         <div v-else>
           <p class="text-gray-500 text-md my-5">
             <span class="text-interactBlue font-bold">@Jeffery</span>
-            {{reply.content}}
+            Lorem ipsum dolor sit amet.
           </p>
         </div>
 

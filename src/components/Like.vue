@@ -1,11 +1,7 @@
 <script setup>
-
-
 defineProps({
-  like:Number
-})
-
-
+  like: Number,
+});
 </script>
 
 <template>

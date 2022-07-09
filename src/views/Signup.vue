@@ -6,12 +6,13 @@ import { minLength, required, email, sameAs } from "@vuelidate/validators";
 import { reactive, ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 
+import { useStore } from "vuex";
 
 // REACTIVE FORM DATA
-const fileInfo = ref(null);
+const store = useStore();
+
 const account = reactive({
   email: "",
-  username: "",
   password: "",
 });
 
@@ -22,17 +23,14 @@ const rules = computed(() => {
       required,
       email,
     },
-    username: { required },
     password: { required, minLength: minLength(6) },
   };
 });
 const v$ = useVuelidate(rules, account);
 // END
-const userProfile = (e) => {
-  console.log((fileInfo.value = e));
-};
+
 // ASYNC FUNCTION THAT MAKES REQUEST TO BACKEND
-const handleSubmit = () => {
+const handleSubmit = async () => {
   // INSTANTIATE VUELIDATE
   v$.value.$validate();
   // END
@@ -41,7 +39,14 @@ const handleSubmit = () => {
   if (v$.value.$error) {
     return false;
   } else {
-    return true;
+    try {
+      await store.dispatch("signup", {
+        email: account.email,
+        password: account.password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   // END
 };
@@ -51,8 +56,6 @@ const checkIfUserTouched = () => {
     return true;
   } else return false;
 };
-
-
 </script>
 
 <template>
@@ -66,30 +69,6 @@ const checkIfUserTouched = () => {
         </h2>
       </div>
       <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
-        <input type="hidden" name="remember" value="true" />
-        <div>
-          <label for="profile" class="sr-only">Profile</label>
-          <input
-            @change="userProfile($event)"
-            type="file"
-            class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Profile Picture"
-          />
-        </div>
-        <div>
-          <label for="username" class="sr-only">username</label>
-          <input
-            type="text"
-            @blur="checkIfUserTouched"
-            :class="[v$.username.$error ? 'ring-2 ring-red-400 border-2' : '']"
-            v-model="account.username"
-            class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Username"
-          />
-          <span v-if="v$.username.$error" class="text-red-400 font-semibold">
-            {{ v$.username.$errors[0].$message }}
-          </span>
-        </div>
         <div>
           <label for="email-address" class="sr-only">Email address</label>
           <input
@@ -122,11 +101,6 @@ const checkIfUserTouched = () => {
         <div>
           <ButtonVue
             :disabled="v$.$error"
-            :class="[
-              v$.$error
-                ? 'bg-opacity-20 hover:bg-slate-300 cursor-not-allowed'
-                : '',
-            ]"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <!-- Heroicon name: solid/lock-closed -->

@@ -9,8 +9,8 @@ import IconVue from "./Icon.vue";
 import ModalVue from "./Modal.vue";
 // END
 defineProps({
-  reply:Object
-})
+  reply: Object,
+});
 // REACTIVE VARIABLES
 const nestedCommentComponent = ref(false);
 const name = ref("Jeffery");

@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Signin from "../views/Signin.vue";
 import Signup from "../views/Signup.vue";
 import Interact from "@/views/Interact.vue";
+import Profile from "../views/profile.vue"
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/Interactive-section",
     name: "Interact",
     component: Interact,
+  },
+  {
+    path: "/set-up-profile",
+    name: "Profile",
+    component: Profile,
   },
 ];
 

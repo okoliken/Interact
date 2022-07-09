@@ -15,15 +15,16 @@ export default createStore({
   },
   actions: {
     async signup({ commit }, { email, password }) {
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => {
-          if (res) {
-            commit("userProfile", res.user);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const data = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).then((res) => {
+        if (res) {
+          commit("userProfile", res.user);
+        }
+      });
+      return data;
     },
   },
   modules: {},

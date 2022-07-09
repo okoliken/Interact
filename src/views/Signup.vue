@@ -10,7 +10,7 @@ import { useStore } from "vuex";
 
 // REACTIVE FORM DATA
 const store = useStore();
-
+const err = ref('')
 const account = reactive({
   email: "",
   password: "",
@@ -45,7 +45,7 @@ const handleSubmit = async () => {
         password: account.password,
       });
     } catch (error) {
-      console.log(error);
+      err.value = error.message
     }
   }
   // END
@@ -62,7 +62,9 @@ const checkIfUserTouched = () => {
   <div
     class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
+   
     <div class="max-w-md w-full space-y-8">
+    <p class="text-red-500 text-center font-medium"> {{err}}</p>
       <div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Create an Account
@@ -74,7 +76,7 @@ const checkIfUserTouched = () => {
           <input
             type="email"
             autocomplete="email"
-            :class="[v$.email.$error ? 'ring-2 ring-red-400 border-2' : '']"
+            :class="[v$.email.$error ? 'ring-2 ring-red-400 border-1' : '']"
             v-model="account.email"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
@@ -87,7 +89,7 @@ const checkIfUserTouched = () => {
           <label for="password" class="sr-only">Password</label>
           <input
             type="password"
-            :class="[v$.password.$error ? 'ring-2 ring-red-400 border-2' : '']"
+            :class="[v$.password.$error ? 'ring-2 ring-red-400 border-1' : '']"
             autocomplete="current-password"
             v-model="account.password"
             class="appearance-none rounded-sm relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
